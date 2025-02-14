@@ -1,6 +1,8 @@
 package app.config;
 
+import app.entities.Location;
 import app.entities.Parcel;
+import app.entities.Shipment;
 import app.utils.Utils;
 import jakarta.persistence.EntityManagerFactory;
 import org.hibernate.SessionFactory;
@@ -41,6 +43,8 @@ public class HibernateConfig {
     // TODO: IMPORTANT: Add Entity classes here for them to be registered with Hibernate
     private static void getAnnotationConfiguration(Configuration configuration) {
         configuration.addAnnotatedClass(Parcel.class);
+        configuration.addAnnotatedClass(Location.class);
+        configuration.addAnnotatedClass(Shipment.class);
 
     }
 
@@ -78,7 +82,7 @@ public class HibernateConfig {
         props.put("hibernate.hbm2ddl.auto", "create");
         props.put("hibernate.current_session_context_class", "thread");
         props.put("hibernate.show_sql", "false");
-        props.put("hibernate.format_sql", "true");
+        props.put("hibernate.format_sql", "false");
         props.put("hibernate.use_sql_comments", "false");
         return props;
     }

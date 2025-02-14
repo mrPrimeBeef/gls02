@@ -1,12 +1,15 @@
 package app.entities;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
 import app.enums.Status;
 import lombok.*;
 
+@Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,14 +30,25 @@ public class Parcel {
     private LocalDateTime created;
     private LocalDateTime updated;
 
+
+    @Builder.Default
+    @OneToMany(mappedBy = "parcel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Shipment> shipments = new HashSet<>();
+
+    public void addShipment(Shipment shipment){
+        if (shipment != null){
+            this.shipments.add(shipment);
+            shipment.setParcel(this);
+        }
+    }
+
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         created = LocalDateTime.now();
     }
 
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         updated = LocalDateTime.now();
     }
-
 }
