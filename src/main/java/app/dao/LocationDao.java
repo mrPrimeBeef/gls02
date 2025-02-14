@@ -19,5 +19,10 @@ public class LocationDao extends AbstractDao<Location> {
         return instance;
     }
 
+    @Override
+    protected Class<Location> getEntityClass() {
+        return Location.class;
+    }
+
 
 }

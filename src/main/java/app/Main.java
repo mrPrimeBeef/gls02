@@ -42,11 +42,14 @@ public class Main {
 //        Dao<Location> locationDao = LocationDao.getInstance(emf);
 //        Dao locationDao = (LocationDao) LocationDao.getInstance(emf);
 
-//        locationDao.create(new Location(55.722, 12.562, "Ryparken 192 1.th, 2100 København Ø"));
+//        locationDao.create(new Location(50.722, 17.562, "Byvej 1, 2100 København Ø"));
 
         LocationDao locationDao = LocationDao.getInstance(emf);
+        locationDao.create(new Location(50.722, 17.562, "Byvej 1, 2200 København N"));
 
 
+//        System.out.println(locationDao.readById(1));
+        locationDao.readById(1);
 
         emf.close();
 
