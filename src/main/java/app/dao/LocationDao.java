@@ -21,58 +21,43 @@ public class LocationDao {
     }
 
     public Location createLocation(Location location) {
-        EntityManager em = emf.createEntityManager();
-        try {
+        try(EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
             em.persist(location);
             em.getTransaction().commit();
             return location;
-        } finally {
-            em.close();
         }
     }
 
     public Location getLocationById(int id) {
-        EntityManager em = emf.createEntityManager();
-        try {
+        try(EntityManager em = emf.createEntityManager()) {
             return em.find(Location.class, id);
-        } finally {
-            em.close();
         }
     }
 
     public List<Location> getAllLocations() {
-        EntityManager em = emf.createEntityManager();
-        try {
+        try(EntityManager em = emf.createEntityManager()) {
             return em.createQuery("SELECT l FROM Location l", Location.class).getResultList();
-        } finally {
-            em.close();
         }
     }
 
     public Location updateLocation(Location location) {
-        EntityManager em = emf.createEntityManager();
-        try {
+        try(EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
             Location updatedLocation = em.merge(location);
             em.getTransaction().commit();
             return updatedLocation;
-        } finally {
-            em.close();
         }
     }
 
     public void deleteLocation(int id) {
-        EntityManager em = emf.createEntityManager();
-        try {
+        try (EntityManager em = emf.createEntityManager()) {
+            String jpql = "DELETE FROM Location l WHERE l.id = :id";
             em.getTransaction().begin();
-            Location location = em.find(Location.class, id);
-            if (location != null) {
-                em.remove(location);
-            }
+            em.createQuery(jpql)
+                    .setParameter("id", id)
+                    .executeUpdate();
             em.getTransaction().commit();
-        } finally {
-            em.close();
         }
     }
 }

@@ -1,16 +1,15 @@
 package app.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
+@ToString
 @Entity
 public class Location {
     @Id
@@ -19,6 +18,14 @@ public class Location {
     private double latitude;
     private double longitude;
     private String address;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "sourceLocation", cascade = CascadeType.ALL)
+    private List<Shipment> shipmentsFromHere;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "desinationLocation", cascade = CascadeType.ALL)
+    private List<Shipment> shipmentsToHere;
 
     public Location() {
     }

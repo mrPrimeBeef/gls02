@@ -24,27 +24,27 @@ public class Main {
 
         Parcel parcel = Parcel.builder()
                 .trackingNumber("5678")
-                .receiverName("Rolf")
-                .senderName("Peter")
+                .receiverName("person1")
+                .senderName("person2")
                 .status(Status.IN_TRANSIT)
                 .build();
 
         Location location1 = Location.builder()
                 .address("Pakkecentral")
                 .latitude(123456.12345)
-                .latitude(1234.12345)
+                .longitude(1234.12345)
                 .build();
 
         Location location2 = Location.builder()
                 .address("Pakkecentral2")
                 .latitude(123456.12345)
-                .latitude(1234.12345)
+                .longitude(1234.12345)
                 .build();
 
         Shipment shipment1 = Shipment.builder()
                 .sourceLocation(location1)
                 .desinationLocation(location2)
-                .shipmentTimeStamp(LocalDateTime.now())
+                    .shipmentTimeStamp(LocalDateTime.of(2025,02,12,8,50))
                 .parcel(parcel)
                 .build();
 
@@ -54,6 +54,25 @@ public class Main {
         parcel.addShipment(shipment1);
         parcelDao.createParcel(parcel);
 
+
+
+        // location crud
+//        locationDao.getAllLocations().forEach(System.out::println);
+//        System.out.println(locationDao.getLocationById(1));
+//        location1.setAddress("Havnen1");
+//        locationDao.updateLocation(location1);
+//        System.out.println(locationDao.getLocationById(1));
+
+        // shipment crud
+//      shipmentDao.getAllShipments().forEach(System.out::println);
+        System.out.println(shipmentDao.getShipmentById(1));
+        shipment1.setShipmentTimeStamp(LocalDateTime.now());
+        shipmentDao.updateShipment(shipment1);
+        System.out.println(shipment1);
+        shipmentDao.deleteShipment(shipment1.getId());
+
+        locationDao.deleteLocation(1);
+        locationDao.deleteLocation(2);
 
 
     }

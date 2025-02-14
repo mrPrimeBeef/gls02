@@ -1,16 +1,15 @@
 package app.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
+@ToString
 @Entity
 public class Shipment {
     @Id
@@ -18,13 +17,16 @@ public class Shipment {
     int id;
 
     @Setter
-    @ManyToOne//(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
+    @JoinColumn(name = "parcel_id")
     private Parcel parcel;
 
-    @ManyToOne//(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
+    @JoinColumn(name = "sourceLocation")
     private Location sourceLocation;
 
-    @ManyToOne//(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
+    @JoinColumn(name = "desinationLocation")
     private Location desinationLocation;
 
     private LocalDateTime shipmentTimeStamp;

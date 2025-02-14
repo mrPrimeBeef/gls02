@@ -77,11 +77,17 @@ public class ParcelDao {
 
     public void deleteParcel(String trackingNumber) throws DaoExeception {
         try (EntityManager em = emf.createEntityManager()) {
-            String jpql = "DELETE FROM Parcel p WHERE p.trackingNumber = :trackingNumber";
             em.getTransaction().begin();
-            em.createQuery(jpql)
+            Parcel parcel = em.createQuery("SELECT p FROM Parcel p WHERE p.trackingNumber = :trackingNumber", Parcel.class)
                     .setParameter("trackingNumber", trackingNumber)
+                    .getSingleResult();
+
+            em.createQuery("DELETE FROM Shipment s WHERE s.parcel.id = :parcelId")
+                    .setParameter("parcelId", parcel.getId())
                     .executeUpdate();
+
+            em.remove(parcel);
+
             em.getTransaction().commit();
         }
     }

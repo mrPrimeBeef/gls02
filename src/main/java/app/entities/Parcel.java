@@ -32,6 +32,7 @@ public class Parcel {
 
 
     @Builder.Default
+    @ToString.Exclude
     @OneToMany(mappedBy = "parcel", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Shipment> shipments = new HashSet<>();
 

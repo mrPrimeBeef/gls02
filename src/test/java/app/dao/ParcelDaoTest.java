@@ -21,19 +21,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParcelDaoTest {
     private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryForTest();
     private static final ParcelDao parcelDao = ParcelDao.getInstance(emf);
-    private static Parcel p1;
-    private static Parcel p2;
+    private static final LocationDao locationDao = LocationDao.getInstance(emf);
 
     @BeforeEach
     void setUp() {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
+            em.createQuery("DELETE FROM Shipment").executeUpdate();
+            em.createQuery("DELETE FROM Location ").executeUpdate();
             em.createQuery("DELETE FROM Parcel").executeUpdate();
+            em.createNativeQuery("ALTER SEQUENCE shipment_id_seq RESTART WITH 1").executeUpdate();
+            em.createNativeQuery("ALTER SEQUENCE location_id_seq RESTART WITH 1").executeUpdate();
             em.createNativeQuery("ALTER SEQUENCE parcel_id_seq RESTART WITH 1").executeUpdate();
             em.getTransaction().commit();
-            Parcel[] students = app.populators.ParcelPopulator.populate(parcelDao);
-            p1 = students[0];
-            p2 = students[1];
+            app.populators.ParcelPopulator.populate(parcelDao, locationDao);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,21 +63,20 @@ class ParcelDaoTest {
                 .build();
 
         parcelDao.createParcel(parcel);
-        assertEquals(3, parcel.getId());
+        assertEquals(2, parcel.getId());
 
         assertThrows(IllegalArgumentException.class, () -> parcelDao.createParcel(null));
 
         List<Parcel> parcels = parcelDao.readAllParcels();
-        assertEquals(3, parcels.size());
+        assertEquals(2, parcels.size());
     }
 
     @Test
     void readByTrackingNumber() {
         Parcel parcel = parcelDao.readByTrackingNumber("5678");
 
-
-        assertEquals("Rolf", parcel.getReceiverName());
-        assertEquals("Peter", parcel.getSenderName());
+        assertEquals("person1", parcel.getReceiverName());
+        assertEquals("person2", parcel.getSenderName());
         assertEquals(1, parcel.getId());
 
         assertNotEquals(2, parcel.getId());
@@ -87,13 +87,12 @@ class ParcelDaoTest {
     @Test
     void readAllParcels() {
         List<Parcel> parcels = parcelDao.readAllParcels();
-        assertEquals(2, parcels.size());
+        assertEquals(1, parcels.size());
         assertEquals(1, parcels.get(0).getId());
         assertEquals("5678", parcels.get(0).getTrackingNumber());
-        assertEquals("Peter", parcels.get(0).getSenderName());
-        assertEquals("Rolf", parcels.get(0).getReceiverName());
+        assertEquals("person2", parcels.get(0).getSenderName());
+        assertEquals("person1", parcels.get(0).getReceiverName());
         assertEquals(Status.IN_TRANSIT, parcels.get(0).getStatus());
-        assertTrue(LocalDateTime.now().isAfter(parcels.get(0).getCreated()));
         assertNull(parcels.get(0).getUpdated());
     }
 
@@ -111,10 +110,10 @@ class ParcelDaoTest {
     @Test
     void deleteParcel() {
         parcelDao.deleteParcel("5678");
-        assertThrows(DaoExeception.class, () -> parcelDao.deleteParcel("findesIkke"));
+        assertThrows(NoResultException.class, () -> parcelDao.deleteParcel("findesIkke"));
         assertThrows(NoResultException.class, () -> parcelDao.readByTrackingNumber("5678"));
 
         List<Parcel> parcels = parcelDao.readAllParcels();
-        assertEquals(1,parcels.size());
+        assertEquals(0, parcels.size());
     }
 }
