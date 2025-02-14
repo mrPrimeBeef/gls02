@@ -17,6 +17,7 @@ class LocationDaoTest {
     private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryForTest();
     private static final ParcelDao parcelDao = ParcelDao.getInstance(emf);
     private static final LocationDao locationDao = LocationDao.getInstance(emf);
+    private static final ShipmentDao shipmentDao = ShipmentDao.getInstance(emf);
 
     @BeforeEach
     void setUp() {
@@ -69,21 +70,34 @@ class LocationDaoTest {
     void getLocationById() {
         Location location = locationDao.getLocationById(2);
 
-        assertEquals(2,location.getId());
-        assertEquals("Pakkecentral2",location.getAddress());
-        locationDao.getLocationById(40);
-//        assertThrows(NoResultException.class, () -> );
+        assertEquals(2, location.getId());
+        assertEquals("Pakkecentral2", location.getAddress());
+        assertNull(locationDao.getLocationById(40));
     }
 
     @Test
     void getAllLocations() {
+        List<Location> list = locationDao.getAllLocations();
+
+        assertEquals("Pakkecentral", list.get(0).getAddress());
+        assertEquals(123456.12345, list.get(0).getLatitude());
+        assertEquals(2, list.size());
     }
 
     @Test
     void updateLocation() {
+        Location locationToUpdate = locationDao.getLocationById(1);
+        locationToUpdate.setAddress("newAdresse");
+        Location updatedeLocation = locationDao.updateLocation(locationToUpdate);
+
+        assertEquals("newAdresse",locationDao.getLocationById(1).getAddress());
     }
 
     @Test
     void deleteLocation() {
+        shipmentDao.deleteShipment(1);
+        locationDao.deleteLocation(1);
+
+        assertEquals(1,locationDao.getAllLocations().size());
     }
 }
