@@ -1,5 +1,7 @@
 package app;
 
+import app.dao.ShipmentDao;
+import app.entities.Shipment;
 import jakarta.persistence.EntityManagerFactory;
 
 import app.config.HibernateConfig;
@@ -45,11 +47,19 @@ public class Main {
 //        locationDao.create(new Location(50.722, 17.562, "Byvej 1, 2100 København Ø"));
 
         LocationDao locationDao = LocationDao.getInstance(emf);
-        locationDao.create(new Location(50.722, 17.562, "Byvej 1, 2200 København N"));
+        ShipmentDao shipmentDao = ShipmentDao.getInstance(emf);
+
+
+        Location slagelsePackageCenter = locationDao.create(new Location(55.24, 11.21, "Bjergbygade 1, 4200 Slagelse"));
+        Location odensePackageCenter = locationDao.create(new Location(57.99, 10.34, "Grønlandsgade 1, 5000 Odense"));
+
+        Shipment s = new Shipment(slagelsePackageCenter, odensePackageCenter);
+
+        shipmentDao.create(s);
 
 
 //        System.out.println(locationDao.readById(1));
-        locationDao.readById(1);
+//        locationDao.readById(1);
 
         emf.close();
 
