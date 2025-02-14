@@ -1,18 +1,23 @@
 package app.dao;
 
-import app.entities.Location;
 import jakarta.persistence.EntityManagerFactory;
 
-public class LocationDao extends Dao<Location> {
+import app.entities.Location;
+
+public class LocationDao extends AbstractDao<Location> {
+
+    private static LocationDao instance;
 
     private LocationDao(EntityManagerFactory entityManagerFactory) {
         super(entityManagerFactory);
     }
 
-    public LocationDao getInstance(EntityManagerFactory entityManagerFactory){
-
+    public static LocationDao getInstance(EntityManagerFactory entityManagerFactory) {
+        if (instance == null) {
+            instance = new LocationDao(entityManagerFactory);
+        }
+        return instance;
     }
-
 
 
 }

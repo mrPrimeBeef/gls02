@@ -3,15 +3,13 @@ package app.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
-public abstract class Dao<Entity> {
+public abstract class AbstractDao<Entity> {
 
     private static EntityManagerFactory emf;
 
-    public Dao(EntityManagerFactory entityManagerFactory) {
+    protected AbstractDao(EntityManagerFactory entityManagerFactory) {
         emf = entityManagerFactory;
     }
-
-    public abstract Dao<Entity> getInstance(EntityManagerFactory entityManagerFactory);
 
     public Entity create(Entity entity) {
         try (EntityManager em = emf.createEntityManager()) {
@@ -21,6 +19,5 @@ public abstract class Dao<Entity> {
             return entity;
         }
     }
-
 
 }

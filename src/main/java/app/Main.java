@@ -6,7 +6,6 @@ import app.config.HibernateConfig;
 import app.dao.ParcelDao;
 import app.entities.Parcel;
 import app.enums.Status;
-import app.dao.Dao;
 import app.dao.LocationDao;
 import app.entities.Location;
 
@@ -44,6 +43,9 @@ public class Main {
 //        Dao locationDao = (LocationDao) LocationDao.getInstance(emf);
 
 //        locationDao.create(new Location(55.722, 12.562, "Ryparken 192 1.th, 2100 København Ø"));
+
+        LocationDao locationDao = LocationDao.getInstance(emf);
+
 
 
         emf.close();
