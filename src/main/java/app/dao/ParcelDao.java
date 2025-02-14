@@ -2,13 +2,13 @@ package app.dao;
 
 import java.util.List;
 
-import app.enums.Status;
-import app.exceptions.DaoExeception;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
 
 import app.entities.Parcel;
+import app.enums.Status;
+import app.exceptions.DaoExeception;
 
 
 public class ParcelDao {

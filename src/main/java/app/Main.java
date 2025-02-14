@@ -1,10 +1,14 @@
 package app;
 
+import jakarta.persistence.EntityManagerFactory;
+
 import app.config.HibernateConfig;
 import app.dao.ParcelDao;
 import app.entities.Parcel;
 import app.enums.Status;
-import jakarta.persistence.EntityManagerFactory;
+import app.dao.Dao;
+import app.dao.LocationDao;
+import app.entities.Location;
 
 public class Main {
 
@@ -34,6 +38,16 @@ public class Main {
         System.out.println(parcelDao.readByTrackingNumber("1234"));
 
         parcelDao.deleteParcel("findes ikke");
+
+
+//        Dao<Location> locationDao = LocationDao.getInstance(emf);
+//        Dao locationDao = (LocationDao) LocationDao.getInstance(emf);
+
+//        locationDao.create(new Location(55.722, 12.562, "Ryparken 192 1.th, 2100 København Ø"));
+
+
+        emf.close();
+
 
     }
 }

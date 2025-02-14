@@ -3,9 +3,9 @@ package app.entities;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import app.enums.Status;
-import lombok.*;
 
 @Getter
 @NoArgsConstructor
@@ -28,12 +28,12 @@ public class Parcel {
     private LocalDateTime updated;
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         created = LocalDateTime.now();
     }
 
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         updated = LocalDateTime.now();
     }
 
