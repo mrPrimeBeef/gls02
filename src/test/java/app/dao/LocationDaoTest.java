@@ -1,11 +1,15 @@
 package app.dao;
 
 import app.config.HibernateConfig;
+import app.entities.Location;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,11 +50,29 @@ class LocationDaoTest {
 
     @Test
     void createLocation() {
+        Location locationNew = Location.builder()
+                .address("Ny")
+                .latitude(789.456)
+                .longitude(123.456)
+                .build();
 
+        locationDao.createLocation(locationNew);
+
+        List<Location> listOfAllLocations = locationDao.getAllLocations();
+
+        assertEquals(3, listOfAllLocations.size());
+        assertEquals(3, listOfAllLocations.get(2).getId());
+        assertThrows(IllegalArgumentException.class, () -> locationDao.createLocation(null));
     }
 
     @Test
     void getLocationById() {
+        Location location = locationDao.getLocationById(2);
+
+        assertEquals(2,location.getId());
+        assertEquals("Pakkecentral2",location.getAddress());
+        locationDao.getLocationById(40);
+//        assertThrows(NoResultException.class, () -> );
     }
 
     @Test
