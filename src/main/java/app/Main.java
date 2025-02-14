@@ -48,8 +48,11 @@ public class Main {
                 .parcel(parcel)
                 .build();
 
-        locationDao.createLocation(location1);
-        locationDao.createLocation(location2);
+        locationDao.create(location1);
+        locationDao.create(location2);
+
+//        locationDao.createLocation(location1);
+//        locationDao.createLocation(location2);
 
         parcel.addShipment(shipment1);
         parcelDao.createParcel(parcel);
@@ -65,14 +68,14 @@ public class Main {
 
         // shipment crud
 //      shipmentDao.getAllShipments().forEach(System.out::println);
-        System.out.println(shipmentDao.getShipmentById(1));
-        shipment1.setShipmentTimeStamp(LocalDateTime.now());
-        shipmentDao.updateShipment(shipment1);
-        System.out.println(shipment1);
-        shipmentDao.deleteShipment(shipment1.getId());
-
-        locationDao.deleteLocation(1);
-        locationDao.deleteLocation(2);
+//        System.out.println(shipmentDao.getShipmentById(1));
+//        shipment1.setShipmentTimeStamp(LocalDateTime.now());
+//        shipmentDao.updateShipment(shipment1);
+//        System.out.println(shipment1);
+//        shipmentDao.deleteShipment(shipment1.getId());
+//
+//        locationDao.deleteLocation(1);
+//        locationDao.deleteLocation(2);
 
 
     }
