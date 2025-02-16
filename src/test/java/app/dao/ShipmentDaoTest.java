@@ -45,8 +45,8 @@ class ShipmentDaoTest extends TestSetUp {
                 .parcel(parcel)
                 .build();
 
-        locationDao.createLocation(location1);
-        locationDao.createLocation(location2);
+        locationDao.create(location1);
+        locationDao.create(location2);
         parcelDao.createParcel(parcel);
         Shipment shipment = shipmentDao.createShipment(shipment1);
 

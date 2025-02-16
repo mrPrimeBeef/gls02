@@ -27,27 +27,27 @@ class LocationDaoTest extends TestSetUp {
                 .longitude(123.456)
                 .build();
 
-        locationDao.createLocation(locationNew);
+        locationDao.create(locationNew);
 
-        List<Location> listOfAllLocations = locationDao.getAllLocations();
+        List<Location> listOfAllLocations = locationDao.findAll();
 
         assertEquals(3, listOfAllLocations.size());
         assertEquals(3, listOfAllLocations.get(2).getId());
-        assertThrows(IllegalArgumentException.class, () -> locationDao.createLocation(null));
+        assertThrows(IllegalArgumentException.class, () -> locationDao.create(null));
     }
 
     @Test
     void getLocationById() {
-        Location location = locationDao.getLocationById(2);
+        Location location = locationDao.findById(2);
 
         assertEquals(2, location.getId());
         assertEquals("Pakkecentral2", location.getAddress());
-        assertNull(locationDao.getLocationById(40));
+        assertNull(locationDao.findById(40));
     }
 
     @Test
     void getAllLocations() {
-        List<Location> list = locationDao.getAllLocations();
+        List<Location> list = locationDao.findAll();
 
         assertEquals("Pakkecentral", list.get(0).getAddress());
         assertEquals(123456.12345, list.get(0).getLatitude());
@@ -56,18 +56,18 @@ class LocationDaoTest extends TestSetUp {
 
     @Test
     void updateLocation() {
-        Location locationToUpdate = locationDao.getLocationById(1);
+        Location locationToUpdate = locationDao.findById(1);
         locationToUpdate.setAddress("newAdresse");
-        Location updatedeLocation = locationDao.updateLocation(locationToUpdate);
+        Location updatedeLocation = locationDao.update(locationToUpdate);
 
-        assertEquals("newAdresse",locationDao.getLocationById(1).getAddress());
+        assertEquals("newAdresse",locationDao.findById(1).getAddress());
     }
 
     @Test
     void deleteLocation() {
         shipmentDao.deleteShipment(1);
-        locationDao.deleteLocation(1);
+        locationDao.delete(1);
 
-        assertEquals(1,locationDao.getAllLocations().size());
+        assertEquals(1,locationDao.findAll().size());
     }
 }

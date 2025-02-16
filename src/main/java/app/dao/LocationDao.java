@@ -20,10 +20,6 @@ public class LocationDao extends AbstractDAO<Location,Integer> {
         return instance;
     }
 
-    public Location createLocation(Location location) {
-        return create(location);
-    }
-
 //    public Location createLocation(Location location) {
 //        try(EntityManager em = emf.createEntityManager()) {
 //            em.getTransaction().begin();
@@ -33,27 +29,17 @@ public class LocationDao extends AbstractDAO<Location,Integer> {
 //        }
 //    }
 
-    public Location getLocationById(int id) {
-        return findById(id);
-    }
 
 //    public Location getLocationById(int id) {
 //        try(EntityManager em = emf.createEntityManager()) {
 //            return em.find(Location.class, id);
 //        }
 //    }
-
-    public List<Location> getAllLocations() {
-    return findAll();
-    }
 //    public List<Location> getAllLocations() {
 //        try(EntityManager em = emf.createEntityManager()) {
 //            return em.createQuery("SELECT l FROM Location l", Location.class).getResultList();
 //        }
 //    }
-public Location updateLocation(Location location){
-        return update(location);
-}
 //    public Location updateLocation(Location location) {
 //        try(EntityManager em = emf.createEntityManager()) {
 //            em.getTransaction().begin();
@@ -62,10 +48,6 @@ public Location updateLocation(Location location){
 //            return updatedLocation;
 //        }
 //    }
-
-public void deleteLocation(int id){
-        delete(id);
-}
 //    public void deleteLocation(int id) {
 //        try (EntityManager em = emf.createEntityManager()) {
 //            String jpql = "DELETE FROM Location l WHERE l.id = :id";

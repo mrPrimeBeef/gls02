@@ -39,8 +39,8 @@ public class ParcelPopulator {
                 .parcel(parcel)
                 .build();
 
-        locationDao.createLocation(location1);
-        locationDao.createLocation(location2);
+        locationDao.create(location1);
+        locationDao.create(location2);
 
         parcel.addShipment(shipment1);
         parcelDao.createParcel(parcel);
