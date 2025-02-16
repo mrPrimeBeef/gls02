@@ -50,12 +50,17 @@ public class Main {
         ShipmentDao shipmentDao = ShipmentDao.getInstance(emf);
 
 
+        Location copenhagenSource = locationDao.create(new Location(55.24, 11.21, "Mågevej 1, 2400 København NV"));
         Location slagelsePackageCenter = locationDao.create(new Location(55.24, 11.21, "Bjergbygade 1, 4200 Slagelse"));
         Location odensePackageCenter = locationDao.create(new Location(57.99, 10.34, "Grønlandsgade 1, 5000 Odense"));
+        Location koldingPackageCenter = locationDao.create(new Location(50.31, 18.18, "Skovvangen 1, 6000 Kolding"));
+        Location aarhusDestination = locationDao.create(new Location(45.99, 17.52, "Vestebrogade 1, 8000 Aarhus C"));
 
-        Shipment s = new Shipment(slagelsePackageCenter, odensePackageCenter);
+        Shipment s1 = new Shipment(slagelsePackageCenter, odensePackageCenter);
+        Shipment s2 = new Shipment(slagelsePackageCenter, aarhusDestination);
 
-        shipmentDao.create(s);
+        shipmentDao.create(s1);
+        shipmentDao.create(s2);
 
 
 //        System.out.println(locationDao.readById(1));
