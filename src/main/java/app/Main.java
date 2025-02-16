@@ -22,7 +22,7 @@ public class Main {
         ShipmentDao shipmentDao = ShipmentDao.getInstance(emf);
 
         Parcel p1 = new Parcel("1234", "Peter", "Rolf");
-        parcelDao.createParcel(p1);
+        parcelDao.create(p1);
 
 
 //        Parcel parcel1 = Parcel.builder()
