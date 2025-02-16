@@ -7,10 +7,10 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 
 public abstract class TestSetUp {
-    private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryForTest();
-    private static final ParcelDao parcelDao = ParcelDao.getInstance(emf);
-    private static final LocationDao locationDao = LocationDao.getInstance(emf);
-    private static final ShipmentDao shipmentDao = ShipmentDao.getInstance(emf);
+    protected static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryForTest();
+    protected static final ParcelDao parcelDao = ParcelDao.getInstance(emf);
+    protected static final LocationDao locationDao = LocationDao.getInstance(emf);
+    protected static final ShipmentDao shipmentDao = ShipmentDao.getInstance(emf);
     @BeforeEach
     void setUp() {
         try (EntityManager em = emf.createEntityManager()) {

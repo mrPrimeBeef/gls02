@@ -18,10 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ParcelDaoTest {
-    private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryForTest();
-    private static final ParcelDao parcelDao = ParcelDao.getInstance(emf);
-    private static final LocationDao locationDao = LocationDao.getInstance(emf);
+class ParcelDaoTest extends TestSetUp {
 
     @Test
     void getInstance() {
