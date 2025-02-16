@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
 
+//    public abstract class AbstractDao<Entity>  -> nok en bedre måde at gøre det på
+
 public abstract class AbstractDAO<T, I> {
 
     protected final EntityManagerFactory emf;

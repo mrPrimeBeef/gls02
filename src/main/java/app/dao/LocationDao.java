@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManagerFactory;
 
 import java.util.List;
 
-public class LocationDao extends AbstractDAO {
+public class LocationDao extends AbstractDAO<Location,Integer> {
     private static LocationDao instance;
 
     private LocationDao(EntityManagerFactory emf) {
@@ -21,7 +21,7 @@ public class LocationDao extends AbstractDAO {
     }
 
     public Location createLocation(Location location) {
-        return (Location) create(location);
+        return create(location);
     }
 
 //    public Location createLocation(Location location) {
@@ -34,7 +34,7 @@ public class LocationDao extends AbstractDAO {
 //    }
 
     public Location getLocationById(int id) {
-        return (Location) findById(id);
+        return findById(id);
     }
 
 //    public Location getLocationById(int id) {
@@ -44,7 +44,7 @@ public class LocationDao extends AbstractDAO {
 //    }
 
     public List<Location> getAllLocations() {
-    return (List<Location>) findAll();
+    return findAll();
     }
 //    public List<Location> getAllLocations() {
 //        try(EntityManager em = emf.createEntityManager()) {
@@ -52,7 +52,7 @@ public class LocationDao extends AbstractDAO {
 //        }
 //    }
 public Location updateLocation(Location location){
-        return (Location) update(location);
+        return update(location);
 }
 //    public Location updateLocation(Location location) {
 //        try(EntityManager em = emf.createEntityManager()) {
