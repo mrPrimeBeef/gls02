@@ -1,29 +1,16 @@
-package app.populators;
+package app.dao.populator;
 
 import app.dao.ParcelDao;
 import app.entities.Parcel;
 import app.enums.Status;
 
 
-import java.time.LocalDate;
-
 public class ParcelPopulator {
-    public static Parcel[] populate(ParcelDao parcelDao){
-        Parcel p1 = Parcel.builder()
-                .trackingNumber("5678")
-                .receiverName("Rolf")
-                .senderName("Peter")
-                .status(Status.IN_TRANSIT)
-                .build();
-
+    public static Parcel[] populate(ParcelDao parcelDao) {
+        Parcel p1 = new Parcel("5678", "Rolf", "Peter", Status.IN_TRANSIT);
         p1 = parcelDao.createParcel(p1);
 
-        Parcel p2 = Parcel.builder()
-                .trackingNumber("1234")
-                .receiverName("Peter")
-                .senderName("julemanden")
-                .status(Status.IN_TRANSIT)
-                .build();
+        Parcel p2 = new Parcel("1234", "Peter", "julemanden", Status.IN_TRANSIT);
 
         p2 = parcelDao.createParcel(p2);
         return new Parcel[]{p1, p2};

@@ -11,7 +11,7 @@ import app.enums.Status;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Builder
+//@Builder
 @Entity
 public class Parcel {
     @Id
@@ -35,6 +35,20 @@ public class Parcel {
     @PreUpdate
     protected void onUpdate() {
         updated = LocalDateTime.now();
+    }
+
+    public Parcel(String trackingNumber, String senderName, String receiverName) {
+        this.trackingNumber = trackingNumber;
+        this.senderName = senderName;
+        this.receiverName = receiverName;
+        this.status = Status.PENDING;
+    }
+
+    public Parcel(String trackingNumber, String senderName, String receiverName,Status status) {
+        this.trackingNumber = trackingNumber;
+        this.senderName = senderName;
+        this.receiverName = receiverName;
+        this.status = status;
     }
 
 }
