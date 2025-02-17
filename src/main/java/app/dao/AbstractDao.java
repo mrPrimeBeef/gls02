@@ -29,7 +29,6 @@ public abstract class AbstractDao<Entity> {
         try (EntityManager em = emf.createEntityManager()) {
             return em.find(getEntityClass(), id);
         }
-
     }
 
     public List<Entity> readAll() {

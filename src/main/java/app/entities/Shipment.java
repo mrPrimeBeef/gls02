@@ -16,7 +16,6 @@ public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Setter
     @ManyToOne
     private Parcel parcel;
     @ManyToOne

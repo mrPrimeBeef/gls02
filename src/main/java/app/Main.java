@@ -23,6 +23,11 @@ public class Main {
 
         Parcel p1 = parcelDao.create(new Parcel("1234", "Peter", "Rolf"));
 
+
+
+        parcelDao.update(p1);
+
+
         Location locationA = locationDao.create(new Location(55.24, 11.21, "Mågevej 1, 2400 København NV"));
         Location locationB = locationDao.create(new Location(55.24, 11.21, "Bjergbygade 1, 4200 Slagelse"));
         Location locationC = locationDao.create(new Location(57.99, 10.34, "Grønlandsgade 1, 5000 Odense"));

@@ -26,7 +26,8 @@ public class Parcel {
     @Column(updatable = false)
     private LocalDateTime created;
     private LocalDateTime updated;
-    @OneToMany(mappedBy = "parcel", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @OneToMany(mappedBy = "parcel", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parcel",fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<Shipment> shipments = new ArrayList<>();
 
@@ -55,19 +56,19 @@ public class Parcel {
     }
 
 
-    public void addShipment(Shipment shipment) {
-        if (shipment != null) {
-            this.shipments.add(shipment);
-            shipment.setParcel(this);
-        }
-    }
-
-    public Location getSource() {
-        return shipments.get(0).getDestinationLocation();
-    }
-
-    public Location getDestination() {
-        return shipments.get(shipments.size() - 1).getDestinationLocation();
-    }
+//    public void addShipment(Shipment shipment) {
+//        if (shipment != null) {
+//            this.shipments.add(shipment);
+//            shipment.setParcel(this);
+//        }
+//    }
+//
+//    public Location getSource() {
+//        return shipments.get(0).getDestinationLocation();
+//    }
+//
+//    public Location getDestination() {
+//        return shipments.get(shipments.size() - 1).getDestinationLocation();
+//    }
 
 }
