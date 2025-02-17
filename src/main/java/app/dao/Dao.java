@@ -8,7 +8,7 @@ import jakarta.persistence.TypedQuery;
 
 public class Dao<Entity> {
 
-    protected Class<Entity> entityClass;
+    private Class<Entity> entityClass;
     protected EntityManagerFactory emf;
 
     public Dao(Class<Entity> entityClass, EntityManagerFactory emf) {

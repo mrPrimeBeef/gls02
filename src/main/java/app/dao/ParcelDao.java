@@ -12,34 +12,12 @@ import app.enums.Status;
 import app.exceptions.DaoExeception;
 
 
-public class ParcelDao extends AbstractDao<Parcel> {
+public class ParcelDao extends Dao<Parcel> {
 
-    private static ParcelDao instance;
-
-    private ParcelDao(EntityManagerFactory entityManagerFactory) {
-        super(entityManagerFactory);
+    public ParcelDao(EntityManagerFactory emf) {
+        super(Parcel.class, emf);
     }
 
-    public static ParcelDao getInstance(EntityManagerFactory entityManagerFactory) {
-        if (instance == null) {
-            instance = new ParcelDao(entityManagerFactory);
-        }
-        return instance;
-    }
-
-    @Override
-    protected Class<Parcel> getEntityClass() {
-        return Parcel.class;
-    }
-
-//    public Parcel createParcel(Parcel p) {
-//        try (EntityManager em = emf.createEntityManager()) {
-//            em.getTransaction().begin();
-//            em.persist(p);
-//            em.getTransaction().commit();
-//            return p;
-//        }
-//    }
 
     public Parcel readByTrackingNumber(String trackingNumber) {
         try (EntityManager em = emf.createEntityManager()) {
@@ -50,13 +28,6 @@ public class ParcelDao extends AbstractDao<Parcel> {
         }
     }
 
-//    public List<Parcel> readAllParcels() {
-//        try (EntityManager em = emf.createEntityManager()) {
-//            String jpql = "SELECT p FROM Parcel p";
-//            TypedQuery<Parcel> query = em.createQuery(jpql, Parcel.class);
-//            return query.getResultList();
-//        }
-//    }
 
 //    public void updateParcelStatus(String trackingNumber, Status status) {
 //        try (EntityManager em = emf.createEntityManager()) {
@@ -80,7 +51,7 @@ public class ParcelDao extends AbstractDao<Parcel> {
         }
     }
 
-    public void deleteParcel(String trackingNumber) throws DaoExeception {
+    public void deleteByTrackingNumber(String trackingNumber) throws DaoExeception {
         try (EntityManager em = emf.createEntityManager()) {
             String jpql = "DELETE FROM Parcel p WHERE p.trackingNumber = :trackingNumber";
             em.getTransaction().begin();

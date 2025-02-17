@@ -1,16 +1,13 @@
 package app;
 
-import app.dao.Dao;
 import jakarta.persistence.EntityManagerFactory;
 
-import app.dao.ShipmentDao;
-import app.entities.Shipment;
 import app.config.HibernateConfig;
+import app.dao.Dao;
 import app.dao.ParcelDao;
-import app.entities.Parcel;
-import app.enums.Status;
-import app.dao.LocationDao;
 import app.entities.Location;
+import app.entities.Parcel;
+import app.entities.Shipment;
 
 public class Main {
 
@@ -18,9 +15,9 @@ public class Main {
 
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
 
-        ParcelDao parcelDao = ParcelDao.getInstance(emf);
+        ParcelDao parcelDao = new ParcelDao(emf);
         Dao<Location> locationDao = new Dao<>(Location.class, emf);
-        ShipmentDao shipmentDao = ShipmentDao.getInstance(emf);
+        Dao<Shipment> shipmentDao = new Dao<>(Shipment.class, emf);
 
         Parcel p1 = parcelDao.create(new Parcel("1234", "Peter", "Rolf"));
 
@@ -35,16 +32,11 @@ public class Main {
         shipmentDao.create(new Shipment(p1, locationC, locationD));
         shipmentDao.create(new Shipment(p1, locationD, locationE));
 
-        Parcel p = parcelDao.readById(1);
-        p.getShipments().forEach(System.out::println);
-
-
-        System.out.println(locationDao.readById(1));
+        parcelDao.readById(1).getShipments().forEach(System.out::println);
 
         locationDao.readAll().forEach(System.out::println);
 
-        //        System.out.println(locationDao);
-
+        parcelDao.readAll().forEach(System.out::println);
 
         emf.close();
 
