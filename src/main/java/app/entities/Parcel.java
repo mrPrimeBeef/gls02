@@ -1,6 +1,8 @@
 package app.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,9 +11,7 @@ import app.enums.Status;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
-//@Builder
 @Entity
 public class Parcel {
     @Id
@@ -26,6 +26,9 @@ public class Parcel {
     @Column(updatable = false)
     private LocalDateTime created;
     private LocalDateTime updated;
+    @OneToMany(mappedBy = "parcel", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private List<Shipment> shipments = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
@@ -44,11 +47,27 @@ public class Parcel {
         this.status = Status.PENDING;
     }
 
-    public Parcel(String trackingNumber, String senderName, String receiverName,Status status) {
+    public Parcel(String trackingNumber, String senderName, String receiverName, Status status) {
         this.trackingNumber = trackingNumber;
         this.senderName = senderName;
         this.receiverName = receiverName;
         this.status = status;
+    }
+
+
+    public void addShipment(Shipment shipment) {
+        if (shipment != null) {
+            this.shipments.add(shipment);
+            shipment.setParcel(this);
+        }
+    }
+
+    public Location getSource() {
+        return shipments.get(0).getDestinationLocation();
+    }
+
+    public Location getDestination() {
+        return shipments.get(shipments.size() - 1).getDestinationLocation();
     }
 
 }
