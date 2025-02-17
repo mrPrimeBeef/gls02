@@ -1,5 +1,6 @@
 package app;
 
+import app.dao.Dao;
 import jakarta.persistence.EntityManagerFactory;
 
 import app.dao.ShipmentDao;
@@ -18,15 +19,10 @@ public class Main {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
 
         ParcelDao parcelDao = ParcelDao.getInstance(emf);
-        LocationDao locationDao = LocationDao.getInstance(emf);
+        Dao<Location> locationDao = new Dao<>(Location.class, emf);
         ShipmentDao shipmentDao = ShipmentDao.getInstance(emf);
 
         Parcel p1 = parcelDao.create(new Parcel("1234", "Peter", "Rolf"));
-
-
-
-        parcelDao.update(p1);
-
 
         Location locationA = locationDao.create(new Location(55.24, 11.21, "Mågevej 1, 2400 København NV"));
         Location locationB = locationDao.create(new Location(55.24, 11.21, "Bjergbygade 1, 4200 Slagelse"));
@@ -41,6 +37,14 @@ public class Main {
 
         Parcel p = parcelDao.readById(1);
         p.getShipments().forEach(System.out::println);
+
+
+        System.out.println(locationDao.readById(1));
+
+        locationDao.readAll().forEach(System.out::println);
+
+        //        System.out.println(locationDao);
+
 
         emf.close();
 
